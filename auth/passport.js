@@ -1,13 +1,30 @@
 import passport from "passport";
 import dotenv from "dotenv";
-dotenv.config({ path: ".env" });
 import { PrismaClient } from "@prisma/client";
-import { handleLogin } from "./authHandlers";
 var GoogleStrategy = require("passport-google-oauth20").Strategy;
+
+passport.serializeUser(function (user, cb) {
+  process.nextTick(function () {
+    return cb(null, user.id);
+  });
+});
+
+passport.deserializeUser(function (uid, cb) {
+  process.nextTick(async function () {
+    const user = await prisma.user.findUnique({
+      where: {
+        id: uid,
+      },
+    });
+    return cb(null, user);
+  });
+});
+
+dotenv.config({ path: ".env" });
 
 const prisma = new PrismaClient();
 
-const googlePassport = passport.use(
+passport.use(
   new GoogleStrategy(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
@@ -23,7 +40,7 @@ const googlePassport = passport.use(
       });
       console.log(user);
       if (!user) {
-        await prisma.user.create({
+        const newUser = await prisma.user.create({
           data: {
             id: profile.id,
             name: profile.displayName,
@@ -31,12 +48,12 @@ const googlePassport = passport.use(
             provider: "google",
           },
         });
+        cb(null, newUser);
         console.log("user created!");
       } else {
-        () => handleLogin;
+        cb(null, user);
         console.log("already in db");
       }
-      cb();
     }
   )
 );

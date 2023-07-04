@@ -7,9 +7,7 @@ const handleGoogleLogin = passport.authenticate("google", {
   scope: ["profile", "email"],
 });
 
-const handleGoogleAuth = passport.authenticate("google", {
-  scope: ["profile", "email"],
-});
+const handleGoogleAuth = passport.authenticate("google");
 
 const handleLogin: RequestHandler = (req, res) => {
   res.send("login");

@@ -5,6 +5,7 @@ import passport from "passport";
 import cookieSession from "cookie-session";
 import cors from "cors";
 import dotenv from "dotenv";
+const session = require("express-session");
 const passportSetup = require("./auth/passport");
 
 const app: Express = express();
@@ -19,7 +20,14 @@ app.use(
 );
 
 app.use(passport.initialize());
-// app.use(passport.session());
+app.use(
+  session({
+    secret: "keyboard cat",
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: true },
+  })
+);
 
 app.use(
   cors({
@@ -40,3 +48,5 @@ app.get("/", (req, res) => {
 app.listen(5000, () => {
   console.log("server is running");
 });
+
+export default app;

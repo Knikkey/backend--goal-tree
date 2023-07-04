@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "outDir": "build",
     "target": "es2016",
     "module": "commonjs",
     "esModuleInterop": true,
@@ -7,6 +8,7 @@
     "strict": true,
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
-    "noImplicitAny": false
+    "noImplicitAny": false,
+    "allowJs": true
   }
 }
