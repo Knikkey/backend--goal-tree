@@ -4,11 +4,11 @@ import passport from "passport";
 type RequestHandler = (req: Request, res: Response, next?: NextFunction) => any;
 
 const handleGoogleLogin = passport.authenticate("google", {
-  scope: ["profile"],
+  scope: ["profile", "email"],
 });
 
 const handleGoogleAuth = passport.authenticate("google", {
-  scope: ["profile"],
+  scope: ["profile", "email"],
 });
 
 const handleLogin: RequestHandler = (req, res) => {
