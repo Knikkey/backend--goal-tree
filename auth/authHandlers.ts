@@ -13,12 +13,13 @@ const handleLogin: RequestHandler = (req, res) => {
   res.send("login");
 };
 
-const handleLogout: RequestHandler = (req, res) => {
-  res.send("logout");
+const handleLogout: RequestHandler = (req, res, next) => {
+  req.logout(next!);
+  res.redirect("/auth/login");
 };
 
 const handleGoogleRedirect: RequestHandler = (req, res) => {
-  res.send("google redirect");
+  res.redirect("/dashboard/");
 };
 
 export {

@@ -4,20 +4,16 @@ import { PrismaClient } from "@prisma/client";
 var GoogleStrategy = require("passport-google-oauth20").Strategy;
 
 passport.serializeUser(function (user, cb) {
-  process.nextTick(function () {
-    return cb(null, user.id);
-  });
+  cb(null, user.id);
 });
 
-passport.deserializeUser(function (uid, cb) {
-  process.nextTick(async function () {
-    const user = await prisma.user.findUnique({
-      where: {
-        id: uid,
-      },
-    });
-    return cb(null, user);
+passport.deserializeUser(async function (uid, cb) {
+  const user = await prisma.user.findUnique({
+    where: {
+      id: uid,
+    },
   });
+  cb(null, user);
 });
 
 dotenv.config({ path: ".env" });
@@ -32,13 +28,11 @@ passport.use(
       callbackURL: "/auth/google/callback",
     },
     async function (accessToken, refreshToken, profile, cb) {
-      console.log(profile);
       const user = await prisma.user.findUnique({
         where: {
           id: profile.id,
         },
       });
-      console.log(user);
       if (!user) {
         const newUser = await prisma.user.create({
           data: {
@@ -48,11 +42,9 @@ passport.use(
             provider: "google",
           },
         });
-        cb(null, newUser);
-        console.log("user created!");
+        return cb(null, newUser);
       } else {
-        cb(null, user);
-        console.log("already in db");
+        return cb(null, user);
       }
     }
   )

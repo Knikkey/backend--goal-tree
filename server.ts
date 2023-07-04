@@ -1,11 +1,11 @@
 import { Express } from "express";
 import express from "express";
 import authRoutes from "./auth/authRoutes";
+import dashboardRoutes from "./dashboard/dashboardRoutes";
 import passport from "passport";
-import cookieSession from "cookie-session";
 import cors from "cors";
 import dotenv from "dotenv";
-const session = require("express-session");
+const cookieSession = require("cookie-session");
 const passportSetup = require("./auth/passport");
 
 const app: Express = express();
@@ -13,21 +13,13 @@ dotenv.config({ path: "./.env" });
 
 app.use(
   cookieSession({
-    name: "session",
-    keys: ["placeholder"],
-    maxAge: 7 * 24 * 60 * 60 * 1000,
+    maxAge: 30 * 24 * 60 * 60 * 1000,
+    keys: [process.env.COOKIE_KEY],
   })
 );
 
 app.use(passport.initialize());
-app.use(
-  session({
-    secret: "keyboard cat",
-    resave: false,
-    saveUninitialized: false,
-    cookie: { secure: true },
-  })
-);
+app.use(passport.session());
 
 app.use(
   cors({
@@ -38,12 +30,7 @@ app.use(
 );
 
 app.use("/auth", authRoutes);
-
-app.get("/", (req, res) => {
-  console.log("api hit");
-  console.log(req);
-  res.send("hi");
-});
+app.use("/dashboard", dashboardRoutes);
 
 app.listen(5000, () => {
   console.log("server is running");
