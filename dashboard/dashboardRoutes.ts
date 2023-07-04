@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { authCheck, handleLogin } from "./dashboardHandlers";
+import { authCheck, handleLogin } from "../auth/authHandlers";
 
 const router = Router();
 
