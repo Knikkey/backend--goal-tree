@@ -15,7 +15,7 @@ const handleLogin: RequestHandler = (req, res) => {
 
 const handleLogout: RequestHandler = (req, res, next) => {
   req.logout(next!);
-  res.redirect("/auth/login");
+  res.redirect("/auth/google");
 };
 
 const handleGoogleRedirect: RequestHandler = (req, res) => {
@@ -23,7 +23,7 @@ const handleGoogleRedirect: RequestHandler = (req, res) => {
 };
 
 const authCheck: RequestHandler = (req, res, next) => {
-  if (!req.user) res.redirect("/auth/login");
+  if (!req.user) res.redirect("/auth/google");
   else next && next();
 };
 

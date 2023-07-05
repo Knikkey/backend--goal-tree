@@ -1,24 +1,18 @@
 import passport from "passport";
 import dotenv from "dotenv";
-import { PrismaClient } from "@prisma/client";
+import { findById, createUser } from "../prisma/prismaHanders";
 var GoogleStrategy = require("passport-google-oauth20").Strategy;
+
+dotenv.config({ path: ".env" });
 
 passport.serializeUser(function (user, cb) {
   cb(null, user.id);
 });
 
 passport.deserializeUser(async function (uid, cb) {
-  const user = await prisma.user.findUnique({
-    where: {
-      id: uid,
-    },
-  });
+  const user = await findById(uid);
   cb(null, user);
 });
-
-dotenv.config({ path: ".env" });
-
-const prisma = new PrismaClient();
 
 passport.use(
   new GoogleStrategy(
@@ -28,22 +22,17 @@ passport.use(
       callbackURL: "/auth/google/callback",
     },
     async function (accessToken, refreshToken, profile, cb) {
-      const user = await prisma.user.findUnique({
-        where: {
-          id: profile.id,
-        },
-      });
+      const prof = await profile;
+      console.log(prof);
+      const user = await findById(profile.id);
       if (!user) {
-        const newUser = await prisma.user.create({
-          data: {
-            id: profile.id,
-            name: profile.displayName,
-            email: profile.emails[0].value,
-            provider: "google",
-          },
-        });
+        console.log("creating new user");
+
+        const newUser = await createUser(profile);
         return cb(null, newUser);
       } else {
+        console.log("logging in");
+
         return cb(null, user);
       }
     }

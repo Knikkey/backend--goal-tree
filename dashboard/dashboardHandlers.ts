@@ -1,15 +1,25 @@
 import { Request, Response, NextFunction } from "express";
+import { PrismaClient } from "@prisma/client";
 
 type RequestHandler = (req: Request, res: Response, next?: NextFunction) => any;
 
-const authCheck: RequestHandler = (req, res, next) => {
-  if (!req.user) res.redirect("/auth/login");
-  else next && next();
-};
+const postGoal: RequestHandler = (req, res, next) => {};
 
-const handleLogin: RequestHandler = (req, res, next) => {
-  res.send(req.user);
-  console.log(req.user);
-};
+const patchGoal: RequestHandler = (req, res, next) => {};
 
-export { authCheck, handleLogin };
+const deleteGoal: RequestHandler = (req, res, next) => {};
+
+const deleteAllGoals: RequestHandler = (req, res, next) => {};
+
+const getGoal: RequestHandler = (req, res, next) => {};
+
+const getAllGoals: RequestHandler = (req, res, next) => {};
+
+export {
+  postGoal,
+  patchGoal,
+  deleteGoal,
+  deleteAllGoals,
+  getGoal,
+  getAllGoals,
+};
