@@ -2,7 +2,8 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["fieldReference"]
 }
 
 datasource db {
@@ -11,8 +12,35 @@ datasource db {
 }
 
 model User {
-  id       String @id @unique
-  name     String
-  provider String
-  email    String @unique
+  id          String       @id @unique @default(uuid())
+  name        String
+  provider    String
+  email       String       @unique
+  goals       Goal[]
+  preferences Preferences?
+}
+
+model Goal {
+  id           String    @id @unique @default(uuid())
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @default(now())
+  title        String
+  description  String?
+  parentPostId String?
+  masterPostId String
+  subgoals     String[]  @default([])
+  completed    Boolean   @default(false)
+  deadline     DateTime?
+  owner        User      @relation(fields: [ownerId], references: [id])
+  ownerId      String
+
+  @@index([subgoals, createdAt(sort: Desc)])
+}
+
+model Preferences {
+  id                 String  @id @unique @default(uuid())
+  theme              String  @default("Dark")
+  emailNotifications Boolean @default(false)
+  user               User    @relation(fields: [userId], references: [id])
+  userId             String  @unique
 }
