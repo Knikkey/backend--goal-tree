@@ -6,9 +6,14 @@ import passport from "passport";
 import cors from "cors";
 import dotenv from "dotenv";
 const cookieSession = require("cookie-session");
+
+//passportSetup must be required here so that it runs
 const passportSetup = require("./auth/passport");
-//for testing only
-import { deleteAllUsers } from "./prisma/prismaHanders";
+
+//testing only start
+//import { deleteAllUsers } from "./prisma/prismaHanders";
+//deleteAllUsers();
+//testing only end
 
 const app: Express = express();
 dotenv.config({ path: "./.env" });
@@ -37,8 +42,5 @@ app.use("/dashboard", dashboardRoutes);
 app.listen(5000, () => {
   console.log("server is running");
 });
-
-//for testing only
-deleteAllUsers();
 
 export default app;

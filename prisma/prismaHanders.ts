@@ -88,11 +88,12 @@ const getAllMasterGoals = async (uid: string) => {
   return goals;
 };
 const getGoalTree = async (gid: string) => {
-  await prisma.goal.findMany({
+  const goals = await prisma.goal.findMany({
     where: {
       masterPostId: gid,
     },
   });
+  return goals;
 };
 const createGoal = async (body: CreateGoal) => {
   const goal = await prisma.goal.create({

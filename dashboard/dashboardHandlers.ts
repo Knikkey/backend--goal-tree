@@ -1,19 +1,59 @@
 import { Request, Response, NextFunction } from "express";
+import {
+  findGoalById,
+  getAllGoals,
+  getAllMasterGoals,
+  getGoalTree,
+  createGoal,
+  deleteGoal,
+  deleteAllGoals,
+  deleteGoalTree,
+  addSubGoal,
+  patchGoal,
+} from "../prisma/prismaHanders";
 
 type RequestHandler = (req: Request, res: Response, next?: NextFunction) => any;
 
-const postGoal: RequestHandler = (req, res, next) => {};
-const patchGoal: RequestHandler = (req, res, next) => {};
-const deleteGoal: RequestHandler = (req, res, next) => {};
-const deleteAllGoals: RequestHandler = (req, res, next) => {};
-const getGoal: RequestHandler = (req, res, next) => {};
-const getAllGoals: RequestHandler = (req, res, next) => {};
-
+const findGoalByIdHandler: RequestHandler = (req, res, next) => {
+  return findGoalById(req.body.gid);
+};
+const getAllGoalsHandler: RequestHandler = (req, res, next) => {
+  return getAllGoals(req.body.uid);
+};
+const getAllMasterGoalsHandler: RequestHandler = (req, res, next) => {
+  return getAllMasterGoals(req.body.uid);
+};
+const getGoalTreeHandler: RequestHandler = (req, res, next) => {
+  return getGoalTree(req.body.uid);
+};
+const postGoalHandler: RequestHandler = (req, res, next) => {
+  createGoal(req.body);
+};
+const patchGoalHandler: RequestHandler = (req, res, next) => {
+  patchGoal(req.body);
+  next && next();
+};
+const addSubGoalHandler: RequestHandler = (req, res, next) => {
+  addSubGoal(req.body.id, req.body.gid);
+};
+const deleteGoalHandler: RequestHandler = (req, res, next) => {
+  deleteGoal(req.body.gid);
+};
+const deleteAllGoalsHandler: RequestHandler = (req, res, next) => {
+  deleteAllGoals(req.body.uid);
+};
+const deleteGoalTreeHandler: RequestHandler = (req, res, next) => {
+  deleteGoalTree(req.body.gid);
+};
 export {
-  postGoal,
-  patchGoal,
-  deleteGoal,
-  deleteAllGoals,
-  getGoal,
-  getAllGoals,
+  findGoalByIdHandler,
+  getAllGoalsHandler,
+  getAllMasterGoalsHandler,
+  getGoalTreeHandler,
+  postGoalHandler,
+  patchGoalHandler,
+  addSubGoalHandler,
+  deleteGoalHandler,
+  deleteAllGoalsHandler,
+  deleteGoalTreeHandler,
 };
