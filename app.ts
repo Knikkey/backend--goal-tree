@@ -28,13 +28,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(
-  cors({
-    origin: "http://localhost:3000/",
-    methods: "GET,POST,PATCH,DELETE",
-    credentials: true,
-  })
-);
+app.use(cors());
 
 app.use("/auth", authRoutes);
 app.use("/dashboard", dashboardRoutes);

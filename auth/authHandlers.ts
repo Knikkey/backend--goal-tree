@@ -19,7 +19,8 @@ const handleLogout: RequestHandler = (req, res, next) => {
 };
 
 const handleGoogleRedirect: RequestHandler = (req, res) => {
-  res.status(301).redirect("http://localhost:3000/dashboard");
+  //res.status(301).redirect("http://localhost:3000/dashboard");
+  res.redirect("/dashboard");
 };
 
 const authCheck: RequestHandler = (req, res, next) => {
