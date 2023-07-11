@@ -1,8 +1,6 @@
 import { Router } from "express";
 import {
   handleLogout,
-  handleLogin,
-  handleGoogleRedirect,
   handleGoogleLogin,
   handleGoogleAuth,
 } from "./authHandlers";
@@ -10,8 +8,7 @@ import {
 const router = Router();
 
 router.get("/logout", handleLogout);
-router.get("/login", handleLogin);
 router.get("/google", handleGoogleLogin);
-router.get("/google/callback", handleGoogleAuth, handleGoogleRedirect);
+router.get("/google/callback", handleGoogleAuth);
 
 export default router;

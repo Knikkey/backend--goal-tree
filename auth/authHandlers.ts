@@ -7,7 +7,9 @@ const handleGoogleLogin = passport.authenticate("google", {
   scope: ["profile", "email"],
 });
 
-const handleGoogleAuth = passport.authenticate("google");
+const handleGoogleAuth = passport.authenticate("google", {
+  successRedirect: "http://localhost:3000/dashboard",
+});
 
 const handleLogin: RequestHandler = (req, res) => {
   res.send(req.user);
@@ -15,12 +17,8 @@ const handleLogin: RequestHandler = (req, res) => {
 
 const handleLogout: RequestHandler = (req, res, next) => {
   req.logout(next!);
-  res.redirect("/auth/google");
-};
-
-const handleGoogleRedirect: RequestHandler = (req, res) => {
-  //res.status(301).redirect("http://localhost:3000/dashboard");
-  res.redirect("/dashboard");
+  next && next();
+  //res.redirect("/auth/google");
 };
 
 const authCheck: RequestHandler = (req, res, next) => {
@@ -31,7 +29,6 @@ const authCheck: RequestHandler = (req, res, next) => {
 export {
   handleLogin,
   handleLogout,
-  handleGoogleRedirect,
   handleGoogleLogin,
   handleGoogleAuth,
   authCheck,

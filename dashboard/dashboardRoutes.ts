@@ -3,6 +3,6 @@ import { authCheck, handleLogin } from "../auth/authHandlers";
 
 const router = Router();
 
-router.get("/", authCheck, handleLogin);
+router.get("/", handleLogin);
 
 export default router;

@@ -17,6 +17,7 @@ const passportSetup = require("./auth/passport");
 
 const app: Express = express();
 dotenv.config({ path: "./.env" });
+app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 
 app.use(
   cookieSession({
@@ -27,8 +28,6 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
-
-app.use(cors());
 
 app.use("/auth", authRoutes);
 app.use("/dashboard", dashboardRoutes);
