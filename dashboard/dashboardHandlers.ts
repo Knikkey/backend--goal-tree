@@ -21,7 +21,8 @@ const getAllGoalsHandler: RequestHandler = (req, res, next) => {
   return getAllGoals(req.body.uid);
 };
 const getAllMasterGoalsHandler: RequestHandler = (req, res, next) => {
-  return getAllMasterGoals(req.body.uid);
+  const { id } = req.params;
+  return getAllMasterGoals(id);
 };
 const getGoalTreeHandler: RequestHandler = (req, res, next) => {
   return getGoalTree(req.body.uid);
