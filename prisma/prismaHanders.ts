@@ -16,9 +16,10 @@ interface CreateGoal {
   title: string;
   ownerId: string;
   completed: boolean;
-  masterPostId: string;
+  masterGoal: boolean;
+  masterGoalId?: string;
   description?: string;
-  parentPostId?: string;
+  parentGoalId?: string;
   deadline?: Date;
 }
 
@@ -82,9 +83,7 @@ const getAllMasterGoals = async (uid: string) => {
   const goals = await prisma.goal.findMany({
     where: {
       ownerId: { equals: uid },
-      masterGoalId: {
-        equals: prisma.goal.fields.id,
-      },
+      masterGoal: { equals: true },
     },
   });
   return goals;
@@ -102,11 +101,11 @@ const createGoal = async (body: CreateGoal) => {
     data: {
       title: body.title,
       completed: body.completed,
-      description: body.description && body.description,
-      deadline: body.deadline && body.deadline,
-      parentGoalId: body.parentPostId && body.parentPostId,
       ownerId: body.ownerId,
-      masterGoalId: body.masterPostId,
+      description: body.description && body.description,
+      masterGoal: body.masterGoal && body.masterGoal,
+      deadline: body.deadline && body.deadline,
+      parentGoalId: body.parentGoalId && body.parentGoalId,
     },
   });
   return goal;

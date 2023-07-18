@@ -27,7 +27,8 @@ model Goal {
   title        String
   description  String?
   parentGoalId String?
-  masterGoalId String
+  masterGoal   Boolean?  @default(false)
+  masterGoalId String?
   subgoals     String[]  @default([])
   completed    Boolean   @default(false)
   deadline     DateTime?

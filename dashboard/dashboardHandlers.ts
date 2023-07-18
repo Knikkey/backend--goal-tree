@@ -23,14 +23,15 @@ const getAllGoalsHandler: RequestHandler = (req, res, next) => {
 const getAllMasterGoalsHandler: RequestHandler = async (req, res, next) => {
   const { id } = req.params;
   const data = await getAllMasterGoals(id);
-  res.send(data);
+  res.status(201).send(data);
+  next && next();
 };
 const getGoalTreeHandler: RequestHandler = (req, res, next) => {
   return getGoalTree(req.body.uid);
 };
-const postGoalHandler: RequestHandler = (req, res, next) => {
-  console.log(req);
-  //createGoal(req.body);
+const postGoalHandler: RequestHandler = async (req, res, next) => {
+  const data = await createGoal(req.body);
+  res.status(201).send(data);
   next && next();
 };
 const patchGoalHandler: RequestHandler = (req, res, next) => {
