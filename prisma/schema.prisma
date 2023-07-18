@@ -26,8 +26,8 @@ model Goal {
   updatedAt    DateTime  @default(now())
   title        String
   description  String?
-  parentPostId String?
-  masterPostId String
+  parentGoalId String?
+  masterGoalId String
   subgoals     String[]  @default([])
   completed    Boolean   @default(false)
   deadline     DateTime?

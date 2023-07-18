@@ -15,6 +15,7 @@ interface Profile {
 interface CreateGoal {
   title: string;
   ownerId: string;
+  completed: boolean;
   masterPostId: string;
   description?: string;
   parentPostId?: string;
@@ -80,7 +81,8 @@ const getAllGoals = async (uid: string) => {
 const getAllMasterGoals = async (uid: string) => {
   const goals = await prisma.goal.findMany({
     where: {
-      masterPostId: {
+      ownerId: { equals: uid },
+      masterGoalId: {
         equals: prisma.goal.fields.id,
       },
     },
@@ -90,7 +92,7 @@ const getAllMasterGoals = async (uid: string) => {
 const getGoalTree = async (gid: string) => {
   const goals = await prisma.goal.findMany({
     where: {
-      masterPostId: gid,
+      masterGoalId: gid,
     },
   });
   return goals;
@@ -99,11 +101,12 @@ const createGoal = async (body: CreateGoal) => {
   const goal = await prisma.goal.create({
     data: {
       title: body.title,
+      completed: body.completed,
       description: body.description && body.description,
       deadline: body.deadline && body.deadline,
-      parentPostId: body.parentPostId && body.parentPostId,
+      parentGoalId: body.parentPostId && body.parentPostId,
       ownerId: body.ownerId,
-      masterPostId: body.masterPostId,
+      masterGoalId: body.masterPostId,
     },
   });
   return goal;
@@ -125,7 +128,7 @@ const deleteAllGoals = async (uid: string) => {
 const deleteGoalTree = async (gid: string) => {
   await prisma.goal.deleteMany({
     where: {
-      masterPostId: gid,
+      masterGoalId: gid,
     },
   });
 };
