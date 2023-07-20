@@ -32,23 +32,13 @@ interface UpdateGoal {
 }
 
 //users
-const findUserById = async (uid: string) => {
+const getUserById = async (uid: string) => {
   const user = await prisma.user.findUnique({
     where: {
       id: uid,
     },
   });
   return user;
-};
-const deleteUser = async (uid: string) => {
-  await prisma.user.delete({
-    where: {
-      id: uid,
-    },
-  });
-};
-const deleteAllUsers = async () => {
-  await prisma.user.deleteMany();
 };
 const createUser = async (profile: Profile) => {
   const user = await prisma.user.create({
@@ -63,21 +53,27 @@ const createUser = async (profile: Profile) => {
 };
 
 //goals
-const findGoalById = async (gid: string) => {
+const createGoal = async (body: CreateGoal) => {
+  const goal = await prisma.goal.create({
+    data: {
+      title: body.title,
+      completed: body.completed,
+      ownerId: body.ownerId,
+      description: body.description && body.description,
+      masterGoal: body.masterGoal && body.masterGoal,
+      deadline: body.deadline && body.deadline,
+      parentGoalId: body.parentGoalId && body.parentGoalId,
+    },
+  });
+  return goal;
+};
+const getGoalById = async (gid: string) => {
   const user = await prisma.goal.findUnique({
     where: {
       id: gid,
     },
   });
   return user;
-};
-const getAllGoals = async (uid: string) => {
-  const goals = await prisma.goal.findMany({
-    where: {
-      ownerId: uid,
-    },
-  });
-  return goals;
 };
 const getAllMasterGoals = async (uid: string) => {
   const goals = await prisma.goal.findMany({
@@ -96,53 +92,6 @@ const getGoalTree = async (gid: string) => {
   });
   return goals;
 };
-const createGoal = async (body: CreateGoal) => {
-  const goal = await prisma.goal.create({
-    data: {
-      title: body.title,
-      completed: body.completed,
-      ownerId: body.ownerId,
-      description: body.description && body.description,
-      masterGoal: body.masterGoal && body.masterGoal,
-      deadline: body.deadline && body.deadline,
-      parentGoalId: body.parentGoalId && body.parentGoalId,
-    },
-  });
-  return goal;
-};
-const deleteGoal = async (gid: string) => {
-  await prisma.goal.delete({
-    where: {
-      id: gid,
-    },
-  });
-};
-const deleteAllGoals = async (uid: string) => {
-  await prisma.goal.deleteMany({
-    where: {
-      ownerId: uid,
-    },
-  });
-};
-const deleteGoalTree = async (gid: string) => {
-  await prisma.goal.deleteMany({
-    where: {
-      masterGoalId: gid,
-    },
-  });
-};
-const addSubGoal = async (gid: string, subGid: string) => {
-  await prisma.goal.update({
-    where: {
-      id: gid,
-    },
-    data: {
-      subgoals: {
-        push: subGid,
-      },
-    },
-  });
-};
 const patchGoal = async (body: UpdateGoal) => {
   await prisma.goal.update({
     where: {
@@ -157,20 +106,29 @@ const patchGoal = async (body: UpdateGoal) => {
     },
   });
 };
+const deleteGoal = async (gid: string) => {
+  await prisma.goal.delete({
+    where: {
+      id: gid,
+    },
+  });
+};
+const deleteGoalTree = async (gid: string) => {
+  await prisma.goal.deleteMany({
+    where: {
+      masterGoalId: gid,
+    },
+  });
+};
 
 export {
-  findUserById,
   createUser,
-  deleteUser,
-  deleteAllUsers,
-  findGoalById,
-  getAllGoals,
+  getUserById,
+  createGoal,
+  getGoalById,
   getAllMasterGoals,
   getGoalTree,
-  createGoal,
-  deleteGoal,
-  deleteAllGoals,
-  deleteGoalTree,
-  addSubGoal,
   patchGoal,
+  deleteGoal,
+  deleteGoalTree,
 };

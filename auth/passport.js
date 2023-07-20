@@ -1,6 +1,6 @@
 import passport from "passport";
 import dotenv from "dotenv";
-import { findUserById, createUser } from "../prisma/prismaHanders";
+import { getUserById, createUser } from "../prisma/prismaHanders";
 var GoogleStrategy = require("passport-google-oauth20").Strategy;
 
 dotenv.config({ path: ".env" });
@@ -10,7 +10,7 @@ passport.serializeUser(function (user, cb) {
 });
 
 passport.deserializeUser(async function (uid, cb) {
-  const user = await findUserById(uid);
+  const user = await getUserById(uid);
   cb(null, user);
 });
 
@@ -24,7 +24,7 @@ passport.use(
     async function (accessToken, refreshToken, profile, cb) {
       const prof = await profile;
       console.log(prof);
-      const user = await findUserById(profile.id);
+      const user = await getUserById(profile.id);
       if (!user) {
         console.log("creating new user");
 

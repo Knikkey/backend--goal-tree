@@ -18,7 +18,6 @@ const handleLogin: RequestHandler = (req, res) => {
 const handleLogout: RequestHandler = (req, res, next) => {
   req.logout(next!);
   next && next();
-  //res.redirect("/auth/google");
 };
 
 const authCheck: RequestHandler = (req, res, next) => {
