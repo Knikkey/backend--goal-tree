@@ -27,15 +27,11 @@ model Goal {
   title        String
   description  String?
   parentGoalId String?
-  masterGoal   Boolean?  @default(false)
   masterGoalId String?
-  subgoals     String[]  @default([])
   completed    Boolean   @default(false)
   deadline     DateTime?
   owner        User      @relation(fields: [ownerId], references: [id])
   ownerId      String
-
-  @@index([subgoals, createdAt(sort: Desc)])
 }
 
 model Preferences {
