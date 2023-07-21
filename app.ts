@@ -11,8 +11,9 @@ const cookieSession = require("cookie-session");
 const passportSetup = require("./auth/passport");
 
 //testing only start
-//import { deleteAllUsers } from "./prisma/prismaHanders";
+//import { deleteAllUsers, deleteAllGoals } from "./prisma/prismaHanders";
 //deleteAllUsers();
+//deleteAllGoals();
 //testing only end
 
 const app: Express = express();
