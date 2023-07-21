@@ -41,4 +41,4 @@ const deleteGoalHandler: RequestHandler = (req, res, next) => {
 const deleteGoalTreeHandler: RequestHandler = (req, res, next) => {
   deleteGoalTree(req.body.gid);
 };
-export { getAllMasterGoalsHandler, createGoalHandler };
+export { getAllMasterGoalsHandler, createGoalHandler, getGoalTreeHandler };
