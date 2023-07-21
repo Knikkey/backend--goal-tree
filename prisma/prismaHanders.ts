@@ -109,8 +109,8 @@ const getGoalTree = async (gid: string) => {
 
       if (currChildren.length === 0) return;
       else {
+        currChildren.forEach((child) => checkForChildren(child));
         parent.children = currChildren.map((child) => {
-          checkForChildren(child);
           return { ...child, name: child.title };
         });
       }
