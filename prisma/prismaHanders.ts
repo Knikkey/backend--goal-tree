@@ -16,8 +16,6 @@ interface CreateGoal {
   title: string;
   ownerId: string;
   completed: boolean;
-  masterGoal: boolean;
-  masterGoalId?: string;
   description?: string;
   parentGoalId?: string;
   deadline?: Date;
@@ -29,6 +27,11 @@ interface UpdateGoal {
   description?: string;
   deadline?: Date;
   completed?: boolean;
+}
+
+interface Tree {
+  name: string;
+  children?: Tree[];
 }
 
 //users
@@ -60,7 +63,6 @@ const createGoal = async (body: CreateGoal) => {
       completed: body.completed,
       ownerId: body.ownerId,
       description: body.description && body.description,
-      masterGoal: body.masterGoal && body.masterGoal,
       deadline: body.deadline && body.deadline,
       parentGoalId: body.parentGoalId && body.parentGoalId,
     },
@@ -68,29 +70,57 @@ const createGoal = async (body: CreateGoal) => {
   return goal;
 };
 const getGoalById = async (gid: string) => {
-  const user = await prisma.goal.findUnique({
+  const goal = await prisma.goal.findUnique({
     where: {
       id: gid,
     },
   });
-  return user;
+  return goal;
 };
 const getAllMasterGoals = async (uid: string) => {
   const goals = await prisma.goal.findMany({
     where: {
       ownerId: { equals: uid },
-      masterGoal: { equals: true },
+      parentGoalId: { equals: null },
     },
   });
   return goals;
 };
 const getGoalTree = async (gid: string) => {
-  const goals = await prisma.goal.findMany({
+  const parentGoal = await prisma.goal.findUnique({
     where: {
-      masterGoalId: gid,
+      id: gid,
     },
   });
-  return goals;
+  if (parentGoal === null) return;
+
+  const buildTree = (masterParent) => {
+    const tree: Tree = {
+      ...masterParent,
+      name: masterParent.title,
+    };
+
+    const checkForChildren = async (parent) => {
+      const currChildren = await prisma.goal.findMany({
+        where: {
+          parentGoalId: { equals: parent.id },
+        },
+      });
+
+      if (currChildren.length === 0) return;
+      else {
+        parent.children = currChildren.map((child) => {
+          checkForChildren(child);
+          return { ...child, name: child.title };
+        });
+      }
+    };
+
+    checkForChildren(tree);
+    return tree;
+  };
+
+  return buildTree(parentGoal);
 };
 const patchGoal = async (body: UpdateGoal) => {
   await prisma.goal.update({
@@ -121,6 +151,14 @@ const deleteGoalTree = async (gid: string) => {
   });
 };
 
+//testing only
+const deleteAllGoals = async () => {
+  await prisma.goal.deleteMany();
+};
+const deleteAllUsers = async () => {
+  await prisma.user.deleteMany();
+};
+
 export {
   createUser,
   getUserById,
@@ -131,4 +169,6 @@ export {
   patchGoal,
   deleteGoal,
   deleteGoalTree,
+  deleteAllGoals,
+  deleteAllUsers,
 };

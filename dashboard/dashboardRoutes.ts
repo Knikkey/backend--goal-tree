@@ -8,6 +8,7 @@ import {
 const router = Router();
 
 router.route("/main-goals/:id").get(getAllMasterGoalsHandler);
+router.route("/build-tree/:id").get(getAllMasterGoalsHandler);
 router.route("/main-goals/").post(createGoalHandler);
 router.route("/").get(handleLogin);
 
