@@ -16,8 +16,11 @@ const createGoalHandler: RequestHandler = async (req, res, next) => {
   res.status(201).send(data);
   next && next();
 };
-const getGoalByIdHandler: RequestHandler = (req, res, next) => {
-  return getGoalById(req.body.gid);
+const getGoalByIdHandler: RequestHandler = async (req, res, next) => {
+  const { id } = req.params;
+  const data = await getGoalById(id);
+  res.status(201).send(data);
+  next && next();
 };
 const getAllMasterGoalsHandler: RequestHandler = async (req, res, next) => {
   const { id } = req.params;
@@ -44,8 +47,9 @@ const deleteGoalTreeHandler: RequestHandler = (req, res, next) => {
   deleteGoalTree(req.body.gid);
 };
 export {
-  getAllMasterGoalsHandler,
   createGoalHandler,
+  getGoalByIdHandler,
+  getAllMasterGoalsHandler,
   getGoalTreeHandler,
   patchGoalHandler,
 };
