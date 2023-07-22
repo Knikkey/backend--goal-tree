@@ -25,7 +25,6 @@ interface UpdateGoal {
   gid: string;
   title?: string;
   description?: string;
-  deadline?: Date;
   completed?: boolean;
 }
 
@@ -63,7 +62,6 @@ const createGoal = async (body: CreateGoal) => {
       completed: body.completed,
       ownerId: body.ownerId,
       description: body.description && body.description,
-      deadline: body.deadline && body.deadline,
       parentGoalId: body.parentGoalId && body.parentGoalId,
     },
   });
@@ -130,7 +128,6 @@ const patchGoal = async (body: UpdateGoal) => {
     data: {
       title: body.title && body.title,
       description: body.description && body.description,
-      deadline: body.deadline && body.deadline,
       completed: body.completed && body.completed,
       updatedAt: new Date(Date.now()),
     },
