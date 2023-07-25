@@ -81,6 +81,7 @@ const getAllMasterGoals = async (uid: string) => {
       ownerId: { equals: uid },
       parentGoalId: { equals: null },
     },
+    orderBy: { createdAt: "asc" },
   });
   return goals;
 };
@@ -121,7 +122,7 @@ const getGoalTree = async (gid: string) => {
   return buildTree(parentGoal);
 };
 const patchGoal = async (body: UpdateGoal) => {
-  await prisma.goal.update({
+  const updatedGoal = await prisma.goal.update({
     where: {
       id: body.gid,
     },
@@ -132,6 +133,7 @@ const patchGoal = async (body: UpdateGoal) => {
       updatedAt: new Date(Date.now()),
     },
   });
+  return updatedGoal;
 };
 const deleteGoal = async (gid: string) => {
   await prisma.goal.delete({
