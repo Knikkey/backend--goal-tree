@@ -13,7 +13,11 @@ const router = Router();
 router.route("/main-goals/:id").get(getAllMasterGoalsHandler);
 router.route("/build-tree/:id").get(getGoalTreeHandler);
 router.route("/main-goals/").post(createGoalHandler);
-router.route("/goals/:id").get(getGoalByIdHandler).patch(patchGoalHandler);
+router
+  .route("/goals/:id")
+  .get(getGoalByIdHandler)
+  .patch(patchGoalHandler)
+  .post();
 router.route("/").get(handleLogin);
 
 export default router;

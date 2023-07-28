@@ -90,13 +90,18 @@ const getGoalTree = async (gid: string) => {
     where: {
       id: gid,
     },
+    select: {
+      id: true,
+      title: true,
+    },
   });
   if (parentGoal === null) return;
 
-  const buildTree = (masterParent) => {
-    const tree: Tree = {
+  const buildTree = async (masterParent) => {
+    let tree: Tree = {
       ...masterParent,
       name: masterParent.title,
+      children: [],
     };
 
     const checkForChildren = async (parent) => {
@@ -104,18 +109,24 @@ const getGoalTree = async (gid: string) => {
         where: {
           parentGoalId: { equals: parent.id },
         },
+        select: {
+          id: true,
+          title: true,
+        },
       });
 
       if (currChildren.length === 0) return;
       else {
-        currChildren.forEach((child) => checkForChildren(child));
+        for (const child of currChildren) {
+          await checkForChildren(child);
+        }
         parent.children = currChildren.map((child) => {
           return { ...child, name: child.title };
         });
       }
     };
 
-    checkForChildren(tree);
+    await checkForChildren(tree);
     return tree;
   };
 
