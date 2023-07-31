@@ -27,7 +27,6 @@ model Goal {
   title        String
   description  String?
   parentGoalId String?
-  masterGoalId String?
   completed    Boolean   @default(false)
   deadline     DateTime?
   owner        User      @relation(fields: [ownerId], references: [id])
