@@ -170,13 +170,6 @@ const deleteGoal = async (gid: string) => {
   const parent = await prisma.goal.delete({ where: { id: gid } });
   return children ? [parent, ...children] : parent;
 };
-const deleteGoalTree = async (gid: string) => {
-  await prisma.goal.deleteMany({
-    where: {
-      masterGoalId: gid,
-    },
-  });
-};
 
 //testing only
 const deleteAllGoals = async () => {
@@ -195,7 +188,6 @@ export {
   getGoalTree,
   patchGoal,
   deleteGoal,
-  deleteGoalTree,
   deleteAllGoals,
   deleteAllUsers,
 };

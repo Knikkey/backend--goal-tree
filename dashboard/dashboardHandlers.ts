@@ -6,7 +6,6 @@ import {
   getGoalTree,
   patchGoal,
   deleteGoal,
-  deleteGoalTree,
 } from "../prisma/prismaHanders";
 
 type RequestHandler = (req: Request, res: Response, next?: NextFunction) => any;
@@ -47,9 +46,7 @@ const deleteGoalHandler: RequestHandler = async (req, res, next) => {
   res.status(201).send(data);
   next && next();
 };
-const deleteGoalTreeHandler: RequestHandler = (req, res, next) => {
-  deleteGoalTree(req.body.gid);
-};
+
 export {
   createGoalHandler,
   getGoalByIdHandler,
