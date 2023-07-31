@@ -147,11 +147,28 @@ const patchGoal = async (body: UpdateGoal) => {
   return updatedGoal;
 };
 const deleteGoal = async (gid: string) => {
-  await prisma.goal.delete({
-    where: {
-      id: gid,
-    },
-  });
+  const findChildren = async (parentId) => {
+    let allChildren = <any>[];
+    const currChildren = await prisma.goal.findMany({
+      where: {
+        parentGoalId: parentId,
+      },
+    });
+    if (currChildren.length === 0) return;
+    else {
+      for (const child of currChildren) {
+        allChildren.push(child);
+        await findChildren(child.id);
+        await prisma.goal.delete({
+          where: { id: child.id },
+        });
+      }
+    }
+    return allChildren;
+  };
+  const children = await findChildren(gid);
+  const parent = await prisma.goal.delete({ where: { id: gid } });
+  return children ? [parent, ...children] : parent;
 };
 const deleteGoalTree = async (gid: string) => {
   await prisma.goal.deleteMany({

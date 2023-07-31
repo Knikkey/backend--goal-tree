@@ -6,6 +6,7 @@ import {
   getGoalTreeHandler,
   patchGoalHandler,
   getGoalByIdHandler,
+  deleteGoalHandler,
 } from "./dashboardHandlers";
 
 const router = Router();
@@ -17,7 +18,7 @@ router
   .route("/goals/:id")
   .get(getGoalByIdHandler)
   .patch(patchGoalHandler)
-  .post();
+  .delete(deleteGoalHandler);
 router.route("/").get(handleLogin);
 
 export default router;
