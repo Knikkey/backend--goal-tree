@@ -36,7 +36,6 @@ const getGoalTreeHandler: RequestHandler = async (req, res, next) => {
 const patchGoalHandler: RequestHandler = async (req, res, next) => {
   const { id } = req.params;
   const data = await patchGoal({ ...req.body, gid: id });
-  console.log("success");
   res.status(201).send(data);
   next && next();
 };

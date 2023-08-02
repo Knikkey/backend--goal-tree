@@ -23,16 +23,11 @@ passport.use(
     },
     async function (accessToken, refreshToken, profile, cb) {
       const prof = await profile;
-      console.log(prof);
       const user = await getUserById(profile.id);
       if (!user) {
-        console.log("creating new user");
-
         const newUser = await createUser(profile);
         return cb(null, newUser);
       } else {
-        console.log("logging in");
-
         return cb(null, user);
       }
     }
