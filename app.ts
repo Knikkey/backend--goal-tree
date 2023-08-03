@@ -19,7 +19,7 @@ const app: Express = express();
 dotenv.config({ path: "./.env" });
 app.use(
   cors({
-    origin: "https://goaltreebyknikkey.vercel.app/",
+    origin: "https://goaltreebyknikkey.vercel.app",
     credentials: true,
   })
 );
