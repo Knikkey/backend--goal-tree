@@ -19,7 +19,7 @@ const app: Express = express();
 dotenv.config({ path: "./.env" });
 app.use(
   cors({
-    origin: "https://goaltreebyknikkey.vercel.app",
+    origin: process.env.CORS_URL,
     credentials: true,
   })
 );
@@ -41,5 +41,9 @@ app.use("/dashboard", dashboardRoutes);
 app.listen({ port: 5000, host: "0.0.0.0" }, () => {
   console.log("server is running");
 });
+//dev
+// app.listen(5000, () => {
+//   console.log("server is running");
+// });
 
 export default app;
