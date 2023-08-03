@@ -10,11 +10,10 @@ const cookieSession = require("cookie-session");
 //passportSetup must be required here so that it runs
 const passportSetup = require("./auth/passport");
 
-//testing only start
-//import { deleteAllUsers, deleteAllGoals } from "./prisma/prismaHanders";
-//deleteAllUsers();
-//deleteAllGoals();
-//testing only end
+// testing only
+// import { deleteAllUsers, deleteAllGoals } from "./prisma/prismaHanders";
+// deleteAllUsers();
+// deleteAllGoals();
 
 const app: Express = express();
 dotenv.config({ path: "./.env" });
