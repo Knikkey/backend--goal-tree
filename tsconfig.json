@@ -2,8 +2,7 @@
   "compilerOptions": {
     "outDir": "build",
     "target": "es2016",
-    "module": "es2020",
-    "moduleResolution": "node",
+    "module": "commonjs",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,

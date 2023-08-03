@@ -1,5 +1,3 @@
-import { createRequire } from "module";
-const require = createRequire(import.meta.url);
 import { Express } from "express";
 import express from "express";
 import authRoutes from "./auth/authRoutes";
