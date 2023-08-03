@@ -8,7 +8,7 @@ const handleGoogleLogin = passport.authenticate("google", {
 });
 
 const handleGoogleAuth = passport.authenticate("google", {
-  successRedirect: "http://localhost:3000/dashboard",
+  successRedirect: "https://goaltreebyknikkey.vercel.app/dashboard",
 });
 
 const handleLogin: RequestHandler = (req, res) => {
