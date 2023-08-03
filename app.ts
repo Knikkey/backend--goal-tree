@@ -20,6 +20,8 @@ dotenv.config({ path: "./.env" });
 app.use(
   cors({
     origin: process.env.CORS_URL,
+    methods: "GET,POST,PATCH,DELETE",
+    allowedHeaders: "Content-Type,Authorization",
     credentials: true,
   })
 );
