@@ -42,7 +42,8 @@ const corsConfig = {
 //     credentials: true,
 //   })
 // );
-
+app.use(cors(corsConfig));
+app.options("*", cors(corsConfig));
 app.use(express.json());
 
 app.use(
@@ -54,8 +55,6 @@ app.use(
 );
 
 app.enable("trust proxy");
-app.use(cors(corsConfig));
-app.options("*", cors(corsConfig));
 
 app.use(passport.initialize());
 app.use(passport.session());
