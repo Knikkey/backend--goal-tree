@@ -1,3 +1,5 @@
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
 import passport from "passport";
 import dotenv from "dotenv";
 import { getUserById, createUser } from "../prisma/prismaHanders";
