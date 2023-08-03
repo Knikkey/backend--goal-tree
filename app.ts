@@ -17,7 +17,12 @@ const passportSetup = require("./auth/passport");
 
 const app: Express = express();
 dotenv.config({ path: "./.env" });
-app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+app.use(
+  cors({
+    origin: "https://goal-tree-frontend.onrender.com/",
+    credentials: true,
+  })
+);
 app.use(express.json());
 
 app.use(
