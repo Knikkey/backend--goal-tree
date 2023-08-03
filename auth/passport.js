@@ -23,9 +23,9 @@ passport.use(
     },
     async function (accessToken, refreshToken, profile, cb) {
       const prof = await profile;
-      const user = await getUserById(profile.id);
+      const user = await getUserById(prof.id);
       if (!user) {
-        const newUser = await createUser(profile);
+        const newUser = await createUser(prof);
         return cb(null, newUser);
       } else {
         return cb(null, user);
