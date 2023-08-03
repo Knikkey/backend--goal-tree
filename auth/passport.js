@@ -6,10 +6,12 @@ var GoogleStrategy = require("passport-google-oauth20").Strategy;
 dotenv.config({ path: ".env" });
 
 passport.serializeUser(function (user, cb) {
+  console.log("serials");
   cb(null, user.id);
 });
 
 passport.deserializeUser(async function (uid, cb) {
+  console.log("deserials");
   const user = await getUserById(uid);
   cb(null, user);
 });
