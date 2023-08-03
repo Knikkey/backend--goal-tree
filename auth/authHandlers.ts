@@ -20,15 +20,4 @@ const handleLogout: RequestHandler = (req, res, next) => {
   next && next();
 };
 
-const authCheck: RequestHandler = (req, res, next) => {
-  if (!req.user) res.redirect("/auth/google");
-  else next && next();
-};
-
-export {
-  handleLogin,
-  handleLogout,
-  handleGoogleLogin,
-  handleGoogleAuth,
-  authCheck,
-};
+export { handleLogin, handleLogout, handleGoogleLogin, handleGoogleAuth };
