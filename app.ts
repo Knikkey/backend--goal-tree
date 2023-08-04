@@ -19,7 +19,7 @@ const app: Express = express();
 dotenv.config({ path: "./.env" });
 
 const corsConfig = {
-  origin: process.env.CORS_URL,
+  origin: process.env.CORS_URL?.split(", "),
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "HEAD", "OPTIONS"],
   allowedHeaders: [
