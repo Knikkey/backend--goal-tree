@@ -14,7 +14,6 @@ const handleGoogleAuth = passport.authenticate("google", {
 });
 
 const handleLogin: RequestHandler = (req, res) => {
-  console.log("logging", req.user);
   res.send(req.user);
 };
 

@@ -34,14 +34,6 @@ const corsConfig = {
   ],
 };
 
-// app.use(
-//   cors({
-//     origin: process.env.CORS_URL,
-//     methods: "GET,POST,PATCH,DELETE",
-//     allowedHeaders: "Content-Type,Authorization",
-//     credentials: true,
-//   })
-// );
 app.use(cors(corsConfig));
 app.options("*", cors(corsConfig));
 app.use(express.json());
