@@ -1,20 +1,21 @@
 import { Request, Response, NextFunction } from "express";
 import passport from "passport";
+import dotenv from "dotenv";
 
 type RequestHandler = (req: Request, res: Response, next?: NextFunction) => any;
 
+dotenv.config({ path: "./.env" });
 const handleGoogleLogin = passport.authenticate("google", {
   scope: ["profile", "email"],
 });
 
 const handleGoogleAuth = passport.authenticate("google", {
-  successRedirect: "https://goaltreebyknikkey.vercel.app/dashboard",
+  successRedirect: `${process.env.REDIRECT_URL}/dashboard`,
   //dev
   //successRedirect: "http://localhost:3000/dashboard",
 });
 
 const handleLogin: RequestHandler = (req, res) => {
-  console.log("logging", req.user);
   res.send(req.user);
 };
 

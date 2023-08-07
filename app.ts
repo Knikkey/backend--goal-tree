@@ -19,7 +19,7 @@ const app: Express = express();
 dotenv.config({ path: "./.env" });
 
 const corsConfig = {
-  origin: process.env.CORS_URL,
+  origin: process.env.CORS_URL?.split(", "),
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "HEAD", "OPTIONS"],
   allowedHeaders: [
@@ -34,21 +34,13 @@ const corsConfig = {
   ],
 };
 
-// app.use(
-//   cors({
-//     origin: process.env.CORS_URL,
-//     methods: "GET,POST,PATCH,DELETE",
-//     allowedHeaders: "Content-Type,Authorization",
-//     credentials: true,
-//   })
-// );
 app.use(cors(corsConfig));
 app.options("*", cors(corsConfig));
 app.use(express.json());
 
 app.use(
   cookieSession({
-    maxAge: 30 * 24 * 60 * 60 * 1000,
+    maxAge: 24 * 60 * 60 * 1000,
     keys: [process.env.COOKIE_KEY],
     sameSite: "none",
   })
