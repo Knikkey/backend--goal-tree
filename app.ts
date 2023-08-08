@@ -10,8 +10,6 @@ const cookieSession = require("cookie-session");
 //passportSetup must be required here so that it runs
 const passportSetup = require("./auth/passport");
 
-console.log(process.env.CORS_URL?.split(", "));
-
 const app: Express = express();
 dotenv.config({ path: "./.env" });
 
