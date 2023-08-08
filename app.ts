@@ -19,8 +19,7 @@ const app: Express = express();
 dotenv.config({ path: "./.env" });
 
 const corsConfig = {
-  //origin: process.env.CORS_URL?.split(", "),
-  origin: process.env.LOCAL_CORS_URL,
+  origin: process.env.CORS_URL?.split(", "),
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "HEAD", "OPTIONS"],
   allowedHeaders: [
@@ -59,9 +58,5 @@ app.use("/dashboard", dashboardRoutes);
 app.listen({ port: 5000, host: "0.0.0.0" }, () => {
   console.log("server is running");
 });
-//dev
-// app.listen(5000, () => {
-//   console.log("server is running");
-// });
 
 export default app;
