@@ -11,8 +11,6 @@ const handleGoogleLogin = passport.authenticate("google", {
 
 const handleGoogleAuth = passport.authenticate("google", {
   successRedirect: `${process.env.REDIRECT_URL}/dashboard`,
-  //dev
-  //successRedirect: "http://localhost:3000/dashboard",
 });
 
 const handleLogin: RequestHandler = (req, res) => {
