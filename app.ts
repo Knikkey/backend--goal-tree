@@ -19,7 +19,8 @@ const app: Express = express();
 dotenv.config({ path: "./.env" });
 
 const corsConfig = {
-  origin: process.env.CORS_URL?.split(", "),
+  //origin: process.env.CORS_URL?.split(", "),
+  origin: process.env.LOCAL_CORS_URL,
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "HEAD", "OPTIONS"],
   allowedHeaders: [
@@ -43,6 +44,7 @@ app.use(
     maxAge: 24 * 60 * 60 * 1000,
     keys: [process.env.COOKIE_KEY],
     sameSite: "none",
+    secure: true,
   })
 );
 
