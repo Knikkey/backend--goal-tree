@@ -1,16 +1,5 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, User } from "@prisma/client";
 const prisma = new PrismaClient();
-
-interface Profile {
-  id: string;
-  displayName: string;
-  emails: [
-    {
-      value: string;
-      verified: boolean;
-    }
-  ];
-}
 
 interface CreateGoal {
   title: string;
@@ -42,12 +31,12 @@ const getUserById = async (uid: string) => {
   });
   return user;
 };
-const createUser = async (profile: Profile) => {
+const createUser = async (profile: User) => {
   const user = await prisma.user.create({
     data: {
       id: profile.id,
-      name: profile.displayName,
-      email: profile.emails[0].value,
+      name: profile.name,
+      email: profile.email,
       provider: "google",
     },
   });
