@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express";
+import { RequestHandler } from "express";
 import {
   createGoal,
   getGoalById,
@@ -7,8 +7,6 @@ import {
   patchGoal,
   deleteGoal,
 } from "../prisma/prismaHandlers";
-
-type RequestHandler = (req: Request, res: Response, next?: NextFunction) => any;
 
 const createGoalHandler: RequestHandler = async (req, res, next) => {
   const data = await createGoal(req.body);
