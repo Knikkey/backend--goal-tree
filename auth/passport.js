@@ -1,6 +1,6 @@
 import passport from "passport";
 import dotenv from "dotenv";
-import { getUserById, createUser } from "../prisma/prismaHanders";
+import { getUserById, createUser } from "../prisma/prismaHandlers";
 var GoogleStrategy = require("passport-google-oauth20").Strategy;
 
 dotenv.config({ path: ".env" });

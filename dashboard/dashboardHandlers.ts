@@ -6,7 +6,7 @@ import {
   getGoalTree,
   patchGoal,
   deleteGoal,
-} from "../prisma/prismaHanders";
+} from "../prisma/prismaHandlers";
 
 type RequestHandler = (req: Request, res: Response, next?: NextFunction) => any;
 
