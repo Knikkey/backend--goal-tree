@@ -10,7 +10,7 @@ const handleGoogleLogin = passport.authenticate("google", {
 });
 
 const handleGoogleAuth = passport.authenticate("google", {
-  successRedirect: `${process.env.REDIRECT_URL}/dashboard`,
+  successRedirect: `${process.env.REDIRECT_URL}dashboard`,
 });
 
 const handleLogin: RequestHandler = (req, res) => {
