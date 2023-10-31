@@ -23,10 +23,15 @@ passport.use(
     },
     async function (accessToken, refreshToken, profile, cb) {
       const prof = await profile;
+      const newUserData = {
+        id: prof.id,
+        name: prof.name.givenName,
+        email: prof.emails[0].value,
+      };
       console.log(prof);
       const user = await getUserById(prof.id);
       if (!user) {
-        const newUser = await createUser(prof);
+        const newUser = await createUser(newUserData);
         return cb(null, newUser);
       } else {
         return cb(null, user);
